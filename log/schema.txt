@@ -1,0 +1,48 @@
+DROP DATABASE IF EXISTS logparser;
+CREATE DATABASE logparser;
+
+DROP TABLE IF EXISTS `logdetails`;
+CREATE TABLE `logdetails` (
+  `RecNo` bigint(20) NOT NULL AUTO_INCREMENT,
+  `StartDate` datetime DEFAULT NULL,
+  `Ip` varchar(45) DEFAULT NULL,
+  `Request` varchar(30) DEFAULT NULL,
+  `Status` char(3) DEFAULT NULL,
+  `UserAgent` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`RecNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `logrequests`
+--
+
+DROP TABLE IF EXISTS `logrequests`;
+CREATE TABLE `logrequests` (
+  `ReqNo` bigint(20) NOT NULL AUTO_INCREMENT,
+  `StartDate` datetime DEFAULT NULL,
+  `Ip` varchar(45) DEFAULT NULL,
+  `TotalRequest` bigint(20) DEFAULT NULL,
+  `Comment` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`ReqNo`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+
+
+create table logDetails(RecNo BIGINT not null auto_increment PRIMARY KEY,StartDate DateTime ,Ip varchar(45),Request varchar(30),Status char(3),UserAgent varchar(200));
+
+create table logRequests(ReqNo BIGINT not null auto_increment PRIMARY KEY,StartDate DateTime,EndDate datetime,Ip varchar(45),TotalRequest BIGINT,Comment varchar(100));
+
+
+SQL QUERY TEST
+
+(1) Write MySQL query to find IPs that mode more than a certain number of requests for a given time period.
+ 
+select Ip,count(ip) as totalRequest,If(count(ip)>6,"BLOCKED FOR CROSSING MORE THAN 6","") as Comment from logDetails where StartDate between DATE_FORMAT('2017-01-01.13:00:00',"%Y-%m-%d.%H:%i:%s") and DATE_FORMAT('2017-01-01.14:00:00',"%Y-%m-%d.%H:%i:%s") GROUP BY ip having count(ip) > 6;
+
+(2) Write MySQL query to find requests made by a given IP.
+
+select count(ip) from logDetails where Ip='192.168.234.82'; 
+
+
+
+
