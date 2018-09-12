@@ -7,5 +7,4 @@ import java.util.List;
 public interface LogParserDao {
 	public ResultObject saveLogData(List<LogData> logDataList);
 	public ResultObject findIpByRequest(String startDate,String endDate,String duration,Integer threshHold);
-	
 }

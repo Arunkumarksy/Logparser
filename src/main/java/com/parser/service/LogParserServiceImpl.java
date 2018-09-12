@@ -47,13 +47,9 @@ public class LogParserServiceImpl implements LogParserService{
 			String sCurrentLine;
 			while ((sCurrentLine = br.readLine()) != null) {
 				String[] split = sCurrentLine.split(Pattern.quote("|"));
-				try {
 					if (split != null) {
 						logDataList.add(new LogData(split[0], split[1], split[2], split[3], split[4]));
 					}
-				} catch (IndexOutOfBoundsException ex) {
-					LOGGER.error("IndexOutOfBoundsException  at loadLogFile :" + ex.getCause(), ex);
-				}
 			}
 		} catch (FileNotFoundException ex) {
 		    throw new ParserException(ParserConstants.FILE_NOT_FOUND_EXCEPTION, ex.getCause());

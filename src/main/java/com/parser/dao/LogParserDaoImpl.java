@@ -22,7 +22,7 @@ import com.parser.exception.ParserException;
 /**
  * 
  * @author arunkumar.k
- *
+ * Dao class for Database Operations
  */
 public class LogParserDaoImpl implements LogParserDao{
 	private static final Logger LOGGER = Logger.getLogger(LogParserDaoImpl.class);
@@ -41,7 +41,7 @@ public class LogParserDaoImpl implements LogParserDao{
 				String truncateQuery = "truncate table logDetails";
 				prepStatement = connection.prepareStatement(truncateQuery);
 				prepStatement.executeUpdate();
-				prepStatement.close();
+				JDBCUtil.closeStatement(prepStatement);
 				/*long startTime = System.currentTimeMillis();
 			    System.out.println(" start exec time :"+System.currentTimeMillis());*/
 				String insertQuery = "Insert into logDetails(StartDate,Ip,Request,Status,UserAgent) VALUES(?,?,?,?,?)";
@@ -128,12 +128,12 @@ public class LogParserDaoImpl implements LogParserDao{
 		ResultObject resultObject = new ResultObject();
 		try {
 			connection = JDBCUtil.getConnection();
-			String truncateQuery = "truncate table logrequests";
+			/*String truncateQuery = "truncate table logrequests";
 			statement = connection.prepareStatement(truncateQuery);
 			statement.executeUpdate();
-			statement.close();
+			statement.close();*/
 			
-			String insertQuery = "Insert into logrequests(StartDate,Ip,TotalRequest,Comment) VALUES(?,?,?,?);";
+			String insertQuery = "Insert into logrequests(StartDate,Ip,TotalRequest,Comment,RequestDate) VALUES(?,?,?,?,now())";
 			statement = connection.prepareStatement(insertQuery);
 			connection.setAutoCommit(false);
 			int i = 0;

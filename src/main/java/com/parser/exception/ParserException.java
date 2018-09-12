@@ -1,10 +1,12 @@
 package com.parser.exception;
 
+/**
+ * 
+ * @author arunkumar.k
+ * Log Parser Custom Exception
+ */
 public class ParserException extends RuntimeException {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	public ParserException() {
