@@ -28,12 +28,6 @@ CREATE TABLE `logrequests` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 
-
-create table logDetails(RecNo BIGINT not null auto_increment PRIMARY KEY,StartDate DateTime ,Ip varchar(45),Request varchar(30),Status char(3),UserAgent varchar(200));
-
-create table logRequests(ReqNo BIGINT not null auto_increment PRIMARY KEY,StartDate DateTime,EndDate datetime,Ip varchar(45),TotalRequest BIGINT,Comment varchar(100));
-
-
 SQL QUERY TEST
 
 (1) Write MySQL query to find IPs that mode more than a certain number of requests for a given time period.

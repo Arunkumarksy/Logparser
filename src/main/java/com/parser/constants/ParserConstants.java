@@ -5,7 +5,7 @@ public interface ParserConstants {
 	public int ERROR_CODE = -1;
 	public String DURATION_DAILY = "daily";
 	public String DURATION_HOURLY = "hourly";
-	public String LOG_FILE_PATH = "C:\\Arun\\DO_Test\\workspace\\LogParser\\log\\access.log";
+	/*public String LOG_FILE_PATH = "C:\\Arun\\DO_Test\\workspace\\LogParser\\log\\access.log";*/
 	public String DATE_FORMAT1 = "YYYY-MM-dd HH:mm:ss";
 	public String DATE_FORMAT2 = "YYYY-MM-dd.HH:mm:ss";
 	public String PROPERTY_FILE_NAME = "parser.properties";
@@ -16,6 +16,7 @@ public interface ParserConstants {
 	public String IO_EXCEPTION = "Io Exception occuered while performing io operation on file";
 	public String EXCEPTION = "An Exception Occured";
 	
+	public String INVALID_LOG_FILE_PATH = "Invalid Log File Path";
 	public String INVALID_START_DATE = "Invalid Input for startDate";
 	public String INVALID_DURATION = "Invalid Input for Duration";
 	public String INVALID_THRESHOLD = "Invalid Input for threshHold";

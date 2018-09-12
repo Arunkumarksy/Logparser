@@ -1,6 +1,8 @@
 package com.parser.main;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,7 @@ public class Parser {
 	public static void main(String args[]) throws ParseException {
 		LOGGER.info("main function executing");
 		LogParserService logParserService = new LogParserServiceImpl();
+		String accessLog = null;
 		String startDate = null;
 		String duration = null;
 		String threshHold = null;
@@ -35,17 +38,43 @@ public class Parser {
 		DateFormat customFormat = new SimpleDateFormat(ParserConstants.DATE_FORMAT2);
 		if (args != null) {
 			if (args[0] != null) {
-				startDate = args[0].substring(args[0].lastIndexOf("=") + 1);
+				accessLog = args[0].substring(args[0].lastIndexOf("=") + 1);
+				try {
+					File f = new File(accessLog);
+					if(f.exists() && !f.isDirectory()) { 
+						validInput = true;
+					}else{
+						System.out.println(ParserConstants.INVALID_LOG_FILE_PATH);
+						validInput = false;
+					}
+				} catch (Exception ex) {
+					System.out.println(ParserConstants.INVALID_LOG_FILE_PATH);
+					validInput = false;
+				}
+			}else{
+				validInput = false;
+				System.out.println(ParserConstants.INVALID_LOG_FILE_PATH);
+			}
+			
+			if (args[1] != null) {
+				startDate = args[1].substring(args[1].lastIndexOf("=") + 1);
 				try {
 					customFormat.parse(startDate);
+					if (validInput != false) {
 					validInput = true;
+					}
 				} catch (ParseException ex) {
 					System.out.println(ParserConstants.INVALID_START_DATE);
 					validInput = false;
 				}
+			}else{
+				System.out.println(ParserConstants.INVALID_START_DATE);
+				validInput = false;
 			}
-			if (args[1] != null) {
-				duration = args[1].substring(args[1].lastIndexOf("=") + 1);
+			
+			
+			if (args[2] != null) {
+				duration = args[2].substring(args[2].lastIndexOf("=") + 1);
 				// System.out.println(" duration :"+duration);
 				if (duration.equals(ParserConstants.DURATION_DAILY)
 						|| duration.equals(ParserConstants.DURATION_HOURLY)) {
@@ -56,9 +85,12 @@ public class Parser {
 					validInput = false;
 					System.out.println(ParserConstants.INVALID_DURATION);
 				}
+			}else{
+				validInput = false;
+				System.out.println(ParserConstants.INVALID_DURATION);
 			}
-			if (args[2] != null) {
-				threshHold = args[2].substring(args[2].lastIndexOf("=") + 1);
+			if (args[3] != null) {
+				threshHold = args[3].substring(args[3].lastIndexOf("=") + 1);
 				try {
 					threshHolds = Integer.parseInt(threshHold);
 					if (validInput != false) {
@@ -68,9 +100,13 @@ public class Parser {
 					validInput = false;
 					System.out.println(ParserConstants.INVALID_THRESHOLD);
 				}
+			}else{
+				validInput = false;
+				System.out.println(ParserConstants.INVALID_THRESHOLD);
 			}
+			
 			if (validInput) {
-				ResultObject resultObject = logParserService.loadLogFile(ParserConstants.LOG_FILE_PATH);
+				ResultObject resultObject = logParserService.loadLogFile(accessLog);
 				if (resultObject == null || resultObject.equals(ParserConstants.ERROR_CODE)) {
 					System.out.println(resultObject.getErrorMessage());
 				}
