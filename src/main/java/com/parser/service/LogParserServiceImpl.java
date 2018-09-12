@@ -20,6 +20,7 @@ import com.parser.common.ResultObject;
 import com.parser.constants.ParserConstants;
 import com.parser.dao.LogParserDao;
 import com.parser.dao.LogParserDaoImpl;
+import com.parser.exception.ParserException;
 
 
 /**
@@ -55,9 +56,13 @@ public class LogParserServiceImpl implements LogParserService{
 				}
 			}
 		} catch (FileNotFoundException ex) {
-			LOGGER.error("FileNotFoundException  at loadLogFile :" + ex.getCause(), ex);
-		} catch (IOException e) {
-			LOGGER.error("IOException at loadLogFile :" + e.getCause(), e);
+		    throw new ParserException(ParserConstants.FILE_NOT_FOUND_EXCEPTION, ex.getCause());
+		} 
+		catch (IndexOutOfBoundsException ex) {
+		    throw new ParserException(ParserConstants.FILE_NOT_FOUND_EXCEPTION, ex.getCause());
+		} 
+		catch (IOException e) {
+			throw new ParserException(ParserConstants.IO_EXCEPTION,e.getCause());
 		} finally {
 			try {
 				if (br != null)
@@ -68,7 +73,7 @@ public class LogParserServiceImpl implements LogParserService{
 				ex.printStackTrace();
 			}
 		}
-		if (logDataList.size() >= 0) {
+		if (logDataList.size() > 0) {
 			LogParserDao logParserDao = new LogParserDaoImpl();
 			resultObject = logParserDao.saveLogData(logDataList);
 		}

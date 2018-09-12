@@ -53,7 +53,7 @@ public class RequestedLog {
 	
 	@Override
 	public String toString() {
-		return "RequestedLog [ip=" + ip + ", totalRequest=" + totalRequest + ", comment=" + comment + "]";
+		return "[ip=" + ip + ", totalRequest=" + totalRequest + ", comment=" + comment + "]";
 	}
 	
 }

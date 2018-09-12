@@ -5,9 +5,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.parser.common.RequestedLog;
 /*import org.apache.log4j.Logger;*/
 import com.parser.common.ResultObject;
 import com.parser.constants.ParserConstants;
@@ -19,9 +21,10 @@ import com.parser.service.LogParserServiceImpl;
  * @author arunkumar.k
  *
  */
-public class LogParser {
-	private static final Logger LOGGER = Logger.getLogger(LogParser.class);
+public class Parser {
+	private static final Logger LOGGER = Logger.getLogger(Parser.class);
 	public static void main(String args[]) throws ParseException{
+		
 		LOGGER.info("main function executing");
 		LogParserService logParserService = new LogParserServiceImpl();
 		String startDate = null;
@@ -57,7 +60,6 @@ public class LogParser {
 			}
 			if(args[2]!=null){
 				threshHold = args[2].substring(args[2].lastIndexOf("=")+1);
-				//System.out.println(" threshHold :"+threshHold);
 				 try{
 					 threshHolds =  Integer.parseInt(threshHold);
 					 if(validInput!=false){
@@ -75,10 +77,16 @@ public class LogParser {
 		    	System.out.println(resultObject.getErrorMessage());
 		    }
 		    ResultObject resultDataObject = logParserService.findIpByRequest(startDate.trim(), duration.trim(), threshHolds);
- 			if(resultDataObject==null || resultDataObject.equals(ParserConstants.ERROR_CODE)){
+ 			if(resultDataObject!=null &&  resultDataObject.getErrorCode()==ParserConstants.SUCCESS_CODE){
+ 				List<RequestedLog> requestList = (List<RequestedLog>)resultDataObject.getObject();
+				for(RequestedLog requestLog : requestList){
+				   System.out.println(requestLog);
+				}
+ 			}else{
  				System.out.println(resultDataObject.getErrorMessage());
  			}
-			} 			
 		}
 	}
+	}
+	
 }
