@@ -26,10 +26,11 @@
      <descriptorRefs>
       <descriptorRef>jar-with-dependencies</descriptorRef>
      </descriptorRefs>
+     <appendAssemblyId>false</appendAssemblyId>
     </configuration>
     <executions>
      <execution>
-      <id>make-assembly</id>
+      <id>jar-with-dependencies</id>
       <phase>package</phase>
       <goals>
        <goal>single</goal>
@@ -38,5 +39,6 @@
     </executions>
    </plugin>
   </plugins>
+  <finalName>parser</finalName>
   </build>
 </project>
